@@ -97,77 +97,6 @@ class NewUserLegend:
         self.layout.addLayoutItem(composerLabel_LegendHeader)
 
 
-class LegendElementPoint(LegendElement):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-
-    def add_legend_item(self, newcomp, cshape_x, cshape_y, Label_layer_x,
-                        Label_layer_y, symbol, layerlabel, uscale):
-        """# add legend symbol and label to layout"""
-
-        cshape = QgsLayoutItemShape(newcomp)
-        cshape.attemptSetSceneRect(QRectF(cshape_x, cshape_y, 7, 4))
-        cshape.setShapeType(QgsLayoutItemShape.Rectangle)
-        centroidFill = QgsCentroidFillSymbolLayer() # style
-        fillSymbol = QgsFillSymbol()
-        fillSymbol.changeSymbolLayer(0, centroidFill)
-        sym = symbol.clone()
-        fillSymbol.symbolLayer(0).setSubSymbol(sym) # set style to rectangle
-        cshape.setSymbol(fillSymbol)
-
-        newcomp.addLayoutItem(cshape)
-        labelwidth = self.addLabelToLayout(newcomp, Label_layer_x,
-                                           Label_layer_y, layerlabel)
-        return labelwidth
-
-
-class LegendElementLine(LegendElement):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-
-    def add_legend_item(self, newcomp, cshape_x, cshape_y, Label_layer_x,
-                        Label_layer_y, symbol, layerlabel, uscale):
-        """# add legend symbol and label to layout"""
-
-        cline = QgsLayoutItemPolyline(QPolygonF([QPoint(0, 0), QPoint(6, 0)]),
-                                                newcomp)
-        cline.attemptSetSceneRect(QRectF(cshape_x, cshape_y+2, 7, 1))
-        newSymbol = symbol.clone()
-        cline.setSymbol(newSymbol)
-        scale = uscale
-
-        newcomp.addLayoutItem(cline)    
-        labelwidth = self.addLabelToLayout(newcomp, Label_layer_x,
-                                           Label_layer_y, layerlabel)
-        return labelwidth
-
-
-class LegendElementPolygon(LegendElement):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-
-    def add_legend_item(self, newcomp, cshape_x, cshape_y, Label_layer_x,
-                        Label_layer_y, symbol, layerlabel, uscale):
-        """# add legend symbol and label to layout"""
-
-        cshape = QgsLayoutItemShape(newcomp)
-        cshape.attemptSetSceneRect(QRectF(cshape_x, cshape_y, 7, 4))
-        cshape.setShapeType(QgsLayoutItemShape.Rectangle)
-        newSymbol = QgsFillSymbol()
-        newSymbol = symbol.clone()
-        cshape.setSymbol(newSymbol)
-
-        newcomp.addLayoutItem(cshape)
-        labelwidth = self.addLabelToLayout(newcomp, Label_layer_x,
-                                           Label_layer_y, layerlabel)
-        return labelwidth
-        
-
 class LegendElement:
     """
         iface,clayer,newcomp,border_left,border_top,
@@ -355,4 +284,75 @@ class LegendElement:
         composerLabel_layer.adjustSizeToText()
         newcomp.addLayoutItem(composerLabel_layer)
         labelwidth = composerLabel_layer.boundingRect().width()
+        return labelwidth
+
+
+class LegendElementPoint(LegendElement):
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+
+    def add_legend_item(self, newcomp, cshape_x, cshape_y, Label_layer_x,
+                        Label_layer_y, symbol, layerlabel, uscale):
+        """# add legend symbol and label to layout"""
+
+        cshape = QgsLayoutItemShape(newcomp)
+        cshape.attemptSetSceneRect(QRectF(cshape_x, cshape_y, 7, 4))
+        cshape.setShapeType(QgsLayoutItemShape.Rectangle)
+        centroidFill = QgsCentroidFillSymbolLayer() # style
+        fillSymbol = QgsFillSymbol()
+        fillSymbol.changeSymbolLayer(0, centroidFill)
+        sym = symbol.clone()
+        fillSymbol.symbolLayer(0).setSubSymbol(sym) # set style to rectangle
+        cshape.setSymbol(fillSymbol)
+
+        newcomp.addLayoutItem(cshape)
+        labelwidth = self.addLabelToLayout(newcomp, Label_layer_x,
+                                           Label_layer_y, layerlabel)
+        return labelwidth
+
+
+class LegendElementLine(LegendElement):
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+
+    def add_legend_item(self, newcomp, cshape_x, cshape_y, Label_layer_x,
+                        Label_layer_y, symbol, layerlabel, uscale):
+        """# add legend symbol and label to layout"""
+
+        cline = QgsLayoutItemPolyline(QPolygonF([QPoint(0, 0), QPoint(6, 0)]),
+                                                newcomp)
+        cline.attemptSetSceneRect(QRectF(cshape_x, cshape_y+2, 7, 1))
+        newSymbol = symbol.clone()
+        cline.setSymbol(newSymbol)
+        scale = uscale
+
+        newcomp.addLayoutItem(cline)    
+        labelwidth = self.addLabelToLayout(newcomp, Label_layer_x,
+                                           Label_layer_y, layerlabel)
+        return labelwidth
+
+
+class LegendElementPolygon(LegendElement):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+
+    def add_legend_item(self, newcomp, cshape_x, cshape_y, Label_layer_x,
+                        Label_layer_y, symbol, layerlabel, uscale):
+        """# add legend symbol and label to layout"""
+
+        cshape = QgsLayoutItemShape(newcomp)
+        cshape.attemptSetSceneRect(QRectF(cshape_x, cshape_y, 7, 4))
+        cshape.setShapeType(QgsLayoutItemShape.Rectangle)
+        newSymbol = QgsFillSymbol()
+        newSymbol = symbol.clone()
+        cshape.setSymbol(newSymbol)
+
+        newcomp.addLayoutItem(cshape)
+        labelwidth = self.addLabelToLayout(newcomp, Label_layer_x,
+                                           Label_layer_y, layerlabel)
         return labelwidth
