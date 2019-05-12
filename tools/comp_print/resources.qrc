@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/plugins/_PrintTools/comp_print" >
+        <file>icon.png</file>
+        <file>icons/arrow_right.png</file>
+        <file>icons/arrow_left.png</file>
+        <file>icons/arrow_up.png</file>
+        <file>icons/arrow_bottom.png</file>
+        <file>icons/start.png</file>
+        <file>icons/orient_gor.png</file>
+        <file>icons/orient_vert.png</file>
+        <file>icons/create.png</file>
+        <file>icons/frames.png</file>
+        <file>icons/lines.png</file>
+        <file>icons/edit.png</file>
+        <file>icons/about.png</file>
+    </qresource>
+</RCC>

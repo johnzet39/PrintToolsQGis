@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/plugins/PrintTools" >
+        <file>icon.png</file>
+    </qresource>
+</RCC>
