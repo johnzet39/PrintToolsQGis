@@ -1,6 +1,8 @@
-from PyQt5.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, QObject, pyqtSignal, QVariant
+from PyQt5.QtCore import (QSettings, QTranslator, qVersion,
+                          QCoreApplication, QObject, pyqtSignal, 
+                          QVariant)
 from PyQt5.QtGui import  QIcon
-from PyQt5.QtWidgets import QAction, QToolButton,  QMenu, QMessageBox
+from PyQt5.QtWidgets import QAction, QToolButton, QMenu, QMessageBox
 from qgis.core import QgsField, QgsVectorLayer
 
 from .unique_field_dialog import UniqueFieldDialog
@@ -12,12 +14,12 @@ class FilterLayer:
         self.iface = iface
         self.dlg_unique = UniqueFieldDialog()
 
+
     def filtershow(self, mlayer = None):
 
         if mlayer is None:
             mlayer = self.iface.activeLayer()
-        
-        
+
         if mlayer != None:
             fcount = mlayer.selectedFeatureCount()
 
@@ -58,7 +60,7 @@ class FilterLayer:
                         self.dlg_unique.show()
                         result = self.dlg_unique.exec_()
                         if result:
-                            if len(self.dlg_unique.mFieldComboBox.currentField())>0:
+                            if len(self.dlg_unique.mFieldComboBox.currentField()) > 0:
                                 fname = self.dlg_unique.mFieldComboBox.currentField()
 
                     if fname is not None:
@@ -69,7 +71,11 @@ class FilterLayer:
                             first = False
                         filterstr = fname+' in ('+ gidstr +')'
                     else:
-                        self.iface.messageBar().pushMessage(u"Не выполнено", u"Отсутствуют заданные ключевые поля в атрибутах слоя", duration=5, level=2)
+                        self.iface.messageBar().pushMessage(
+                                u"Не выполнено",
+                                u"Отсутствуют заданные ключевые поля в атрибутах слоя",
+                                duration=5,
+                                level=2)
                         return
 
             mlayer.setSubsetString(filterstr)  #метка
@@ -82,7 +88,11 @@ class FilterLayer:
         mlayer = self.iface.activeLayer()
         
         if  (mlayer != None) and (mlayer.isEditable()):
-            self.iface.messageBar().pushMessage(u"Не выполнено", u"Отключите режим редактирования активного слоя",  duration=5, level=2)
+            self.iface.messageBar().pushMessage(
+                    u"Не выполнено",
+                    u"Отключите режим редактирования активного слоя",
+                    duration=5,
+                    level=2)
             return
         
         if mlayer != None:
@@ -93,7 +103,7 @@ class FilterLayer:
                 return
             else:
                 if mlayer.providerType() == u'memory':
-                    if len((mlayer.subsetString()).strip())==0: #если фильтр слоя пустой
+                    if len((mlayer.subsetString()).strip()) == 0:
                         gidnum = 0
                         gidstr = ''
                         for feat in mlayer.selectedFeatures():
@@ -106,11 +116,11 @@ class FilterLayer:
                     else:
                         lenfname = len(u'$id')
                         filterstr = mlayer.subsetString().strip()
-                        if filterstr[lenfname:lenfname+7].strip() == u'not in': 
+                        if filterstr[lenfname:lenfname+7].strip() == u'not in':
                             fname = filterstr.split(' ')[0]
                             filterstr = filterstr[:-1]
                             for feat in mlayer.selectedFeatures():
-                                filterstr = filterstr + ', \''+str(feat.id())+'\''
+                                filterstr = filterstr + ', \'' + str(feat.id())+'\''
                             filterstr = filterstr + ')'
                         elif filterstr[lenfname:lenfname+3].strip() == u'in':
                             mlayer.invertSelection()
@@ -137,7 +147,7 @@ class FilterLayer:
                             break
 
                     if fname is not None:
-                        if len((mlayer.subsetString()).strip())==0: #если фильтр слоя пустой
+                        if len((mlayer.subsetString()).strip()) == 0: #если фильтр слоя пустой
                             gidnum = 0
                             gidstr = ''
                             for feat in mlayer.selectedFeatures():
@@ -145,12 +155,12 @@ class FilterLayer:
                                 if gidnum > 1:
                                     gidstr = gidstr + ', \''+ str(feat[fname])+'\''
                                 else:
-                                    gidstr = '\''+str(feat[fname])+'\''
+                                    gidstr = '\'' + str(feat[fname]) + '\''
                             filterstr = fname+' not in ('+ gidstr +')'
                         else:
                             lenfname = len(fname)
                             filterstr = mlayer.subsetString().strip()
-                            if filterstr[lenfname:lenfname+7].strip() == u'not in': 
+                            if filterstr[lenfname:lenfname+7].strip() == u'not in':
                                 fname = filterstr.split(' ')[0]
                                 filterstr = filterstr[:-1]
                                 for feat in mlayer.selectedFeatures():
@@ -162,10 +172,12 @@ class FilterLayer:
                                 return
 
                     else:
-                        self.iface.messageBar().pushMessage(u"Не выполнено", u"Отсутствуют заданные ключевые поля в атрибутах слоя", duration=5, level=2)
+                        self.iface.messageBar().pushMessage(
+                                u"Не выполнено", 
+                                u"Отсутствуют заданные ключевые поля в атрибутах слоя", 
+                                duration=5, 
+                                level=2)
             mlayer.setSubsetString(filterstr)  #метка
             self.iface.mainWindow().statusBar().showMessage(u'Фильтр: '+filterstr)
         else:
             pass
-        self.check_buttons_state()   
-
