@@ -52,7 +52,6 @@ class NewUserLegend:
         for clayer in self.layer_list:
             legendElement = None
             if clayer.geometryType() == QgsWkbTypes.PointGeometry:
-                print(1)
                 legendElement = LegendElementPoint(
                     iface=self.iface, clayer=clayer, newcomp=self.layout,
                     border_left=self.border_left, border_top=self.border_top,
@@ -61,7 +60,6 @@ class NewUserLegend:
                     size_legend=self.size_legend, uscale=self.uscale,
                     layerHeaderState=self.layerHeaderState)
             if clayer.geometryType() == QgsWkbTypes.LineGeometry:
-                print(2)
                 legendElement = LegendElementLine(
                     iface=self.iface, clayer=clayer, newcomp=self.layout,
                     border_left=self.border_left, border_top=self.border_top,
@@ -70,7 +68,6 @@ class NewUserLegend:
                     size_legend=self.size_legend, uscale=self.uscale,
                     layerHeaderState=self.layerHeaderState)
             if clayer.geometryType() == QgsWkbTypes.PolygonGeometry:
-                print(3)
                 legendElement = LegendElementPolygon(
                     iface=self.iface, clayer=clayer, newcomp=self.layout,
                     border_left=self.border_left, border_top=self.border_top,
